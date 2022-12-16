@@ -1,9 +1,43 @@
-#' Title
+#' GDAL grid
 #'
-#' @param pts
-#' @param name
+#' Runs the gdal_grid utility.
 #'
-#' @return
+#' Algorithms listed at https://gdal.org/programs/gdal_grid.html#interpolation-algorithmsuse
+#' @param pts points, columns of X, Y, Z
+#' @param dimension ncols, nrows
+#' @param extent xmin,xmax,ymin,ymax
+#' @param algorithm one of invdist, invdistnn, average, linear see Details
+#' @return matrix of raster values, numeric
+#' @export
+#'
+#' @examples
+#' n <- 500
+#' rc <- cbind(sample(nrow(volcano), n, replace = TRUE), sample(ncol(volcano), n, replace = TRUE))
+#' xyz <- cbind(rc, volcano[rc])
+#' ex <- c(range(xyz[,1]), range(xyz[,2]))
+#' v <- gdal_grid(xyz, extent = ex)
+#' ximage::ximage(v, extent = ex, asp = 1)
+gdal_grid <- function(pts, dimension = c(256, 256), extent = NULL, algorithm = "linear") {
+  if (is.null(extent)) {
+    extent <- c(range(pts[,1]), range(pts[,2]))
+  }
+  file <- vrtpoints(pts)
+  ## build this into vapour/inst/include/gdalapplib/gdalapplib.h
+  sf::gdal_utils("grid", file, tf <- tempfile(fileext = ".tif"), options =c("-a", algorithm))
+  matrix(vapour::vapour_read_raster_dbl(tf, native = TRUE), dimension[2L], byrow = TRUE)
+}
+
+
+#' Write points xyz to CSV for GDAL.
+#'
+#' Obtain a filename that wraps a CSV file with the input points in it. This is suitable
+#' for use with [gdal_grid]() the command line utility, but see [gdal_grid()] the function
+#' for a convenient wrapper.
+#'
+#' @param pts data frame or matrix of points, X, Y, Z
+#' @param name optional, used as the layername in the GDAL source
+#'
+#' @return path to tempfile
 #' @export
 #'
 #' @examples
@@ -13,6 +47,8 @@
 #' plot(xyz[,2:1], col = palr::d_pal(xyz[,3]), pch = 19, cex = .3)
 #' file <- vrtpoints(xyz)
 #' sf::gdal_utils("grid", file, tf <- tempfile(fileext = ".tif"))
+#' sf::read_sf(file)
+#' sf::gdal_utils("info", tf)
 vrtpoints <- function(pts, name = NULL) {
 
   if (ncol(pts) !=3 ) stop("must be 3 columns")
