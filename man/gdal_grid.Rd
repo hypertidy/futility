@@ -9,7 +9,8 @@ gdal_grid(
   dimension = c(256, 256),
   extent = NULL,
   algorithm = "linear",
-  read = TRUE
+  read = TRUE,
+  options = NULL
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ Runs the gdal_grid utility.
 }
 \details{
 Algorithms listed at https://gdal.org/programs/gdal_grid.html#interpolation-algorithmsuse
+
+Pass in paramaters the algorithm name, e. g. 'invdist:power=2.0:smoothing=1.0' - see examples.
 }
 \examples{
 n <- 500
@@ -36,5 +39,8 @@ rc <- cbind(sample(nrow(volcano), n, replace = TRUE), sample(ncol(volcano), n, r
 xyz <- cbind(rc, volcano[rc])
 ex <- c(range(xyz[,1]), range(xyz[,2]))
 v <- gdal_grid(xyz, extent = ex)
+
 ximage::ximage(v, extent = ex, asp = 1)
+
+v1 <- gdal_grid(xyz, extent = ex, algorithm = "invdist:power=2.0:smoothing=1.0 ")
 }

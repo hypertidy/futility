@@ -3,6 +3,8 @@
 #' Runs the gdal_grid utility.
 #'
 #' Algorithms listed at https://gdal.org/programs/gdal_grid.html#interpolation-algorithmsuse
+#'
+#' Pass in paramaters the algorithm name, e. g. 'invdist:power=2.0:smoothing=1.0' - see examples.
 #' @param pts points, columns of X, Y, Z
 #' @param dimension ncols, nrows
 #' @param extent xmin,xmax,ymin,ymax
@@ -16,8 +18,11 @@
 #' xyz <- cbind(rc, volcano[rc])
 #' ex <- c(range(xyz[,1]), range(xyz[,2]))
 #' v <- gdal_grid(xyz, extent = ex)
+#'
 #' ximage::ximage(v, extent = ex, asp = 1)
-gdal_grid <- function(pts, dimension = c(256, 256), extent = NULL, algorithm = "linear", read = TRUE) {
+#'
+#' v1 <- gdal_grid(xyz, extent = ex, algorithm = "invdist:power=2.0:smoothing=1.0 ")
+gdal_grid <- function(pts, dimension = c(256, 256), extent = NULL, algorithm = "linear", read = TRUE, options = NULL) {
   if (is.null(extent)) {
     extent <- c(range(pts[,1]), range(pts[,2]))
   }
@@ -25,7 +30,7 @@ gdal_grid <- function(pts, dimension = c(256, 256), extent = NULL, algorithm = "
   print(file)
   ## build this into vapour/inst/include/gdalapplib/gdalapplib.h
   sf::gdal_utils("grid", file, tf <- tempfile(fileext = ".tif"),
-                 options =c("-a", algorithm,
+                 options = c("-a", algorithm,
                             "-outsize", dimension[1], dimension[2],
                             "-txe", extent[1], extent[2],
                             "-tye", extent[3], extent[4]))

@@ -39,11 +39,11 @@ plot(x1)
 
 ``` r
 x0 <- gdal_grid(xyz, dimension = dim(x1)[2:1], extent = c(range(xyz[,1]), range(xyz[,2])))
-#> [1] "/tmp/Rtmpy4b858/file10b9cc5fe15c9a.vrt"
+#> [1] "/tmp/RtmpaV6eSJ/file113f1c7e6fd30c.vrt"
 #> Warning in CPL_gdalgrid(source, destination, options, oo, quiet): GDAL Message 1: Cannot open   <OGRVRTDataSource>
-#>     <OGRVRTLayer name="fbokphuqgs10b9cc4da1a632">
-#>         <SrcLayer>fbokphuqgs10b9cc4da1a632</SrcLayer>
-#>         <SrcDataSource>/tmp/Rtmpy4b858/fbokphuqgs10b9cc4da1a632.csv</SrcDataSource>
+#>     <OGRVRTLayer name="xzitfpwsny113f1c26b29fb">
+#>         <SrcLayer>xzitfpwsny113f1c26b29fb</SrcLayer>
+#>         <SrcDataSource>/tmp/RtmpaV6eSJ/xzitfpwsny113f1c26b29fb.csv</SrcDataSource>
 #>         <GeometryType>wkbPoint</GeometryType>
 #>         <LayerSRS>WGS84</LayerSRS>
 #>         <GeometryField separator="," encoding="PointFromColumns" x="x" y="y" z="z"/>
@@ -54,8 +54,8 @@ ximage::ximage(x0, asp = 1)
 
 <img src="man/figures/README-example-2.png" width="100%" />
 
-I just wrote this as a way to time with the disussion in this issue
-[‘Extreme performance regression in gdal_grid with method
+I just wrote this as a way to check the timings, of the disussion in
+this issue [‘Extreme performance regression in gdal_grid with method
 linear’](https://github.com/OSGeo/gdal/issues/1879). Looks like there’s
 a problem with results outside the convex hull ….
 
