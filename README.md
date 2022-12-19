@@ -39,11 +39,11 @@ plot(x1)
 
 ``` r
 x0 <- gdal_grid(xyz, dimension = dim(x1)[2:1], extent = c(range(xyz[,1]), range(xyz[,2])))
-#> [1] "/tmp/Rtmpwlxayq/file10ab163a406f2f.vrt"
+#> [1] "/tmp/Rtmpy4b858/file10b9cc5fe15c9a.vrt"
 #> Warning in CPL_gdalgrid(source, destination, options, oo, quiet): GDAL Message 1: Cannot open   <OGRVRTDataSource>
-#>     <OGRVRTLayer name="qducfrbsyj10ab1642fd92dd">
-#>         <SrcLayer>qducfrbsyj10ab1642fd92dd</SrcLayer>
-#>         <SrcDataSource>/tmp/Rtmpwlxayq/qducfrbsyj10ab1642fd92dd.csv</SrcDataSource>
+#>     <OGRVRTLayer name="fbokphuqgs10b9cc4da1a632">
+#>         <SrcLayer>fbokphuqgs10b9cc4da1a632</SrcLayer>
+#>         <SrcDataSource>/tmp/Rtmpy4b858/fbokphuqgs10b9cc4da1a632.csv</SrcDataSource>
 #>         <GeometryType>wkbPoint</GeometryType>
 #>         <LayerSRS>WGS84</LayerSRS>
 #>         <GeometryField separator="," encoding="PointFromColumns" x="x" y="y" z="z"/>
