@@ -1,0 +1,55 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# gdalgrid
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of gdalgrid is just a friendly wrapper around GDAL's [gdal_grid](https://gdal.org/programs/gdal_grid.html)
+
+## Installation
+
+You can install the development version of gdalgrid from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("mdsumner/gdalgrid")
+```
+
+## Example
+
+This is a basic example, compare to the triangulation interpolation in the geometry package. 
+
+```{r example}
+library(gdalgrid)
+library(guerrilla)
+xyz <- quakes[c("long", "lat", "depth")]
+x1 <- tri_fun(xyz[,1:2], xyz[,3, drop = TRUE], 
+              grid = raster::raster(raster::extent(range(xyz[,1]), range(xyz[,2])), res = .1))
+library(raster)
+plot(x1)         
+x0 <- gdal_grid(xyz, dimension = dim(x1)[2:1], extent = c(range(xyz[,1]), range(xyz[,2])))
+ximage::ximage(x0, asp = 1)
+```
+
+
+I just wrote this as a way to time with the disussion in this issue ['Extreme performance regression in gdal_grid with method linear'](https://github.com/OSGeo/gdal/issues/1879). Looks like there's a problem with results outside the convex hull .... 
+
+
+
+## Code of Conduct
+  
+Please note that the gdalgrid project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
