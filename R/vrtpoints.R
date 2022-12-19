@@ -17,14 +17,26 @@
 #' ex <- c(range(xyz[,1]), range(xyz[,2]))
 #' v <- gdal_grid(xyz, extent = ex)
 #' ximage::ximage(v, extent = ex, asp = 1)
-gdal_grid <- function(pts, dimension = c(256, 256), extent = NULL, algorithm = "linear") {
+gdal_grid <- function(pts, dimension = c(256, 256), extent = NULL, algorithm = "linear", read = TRUE) {
   if (is.null(extent)) {
     extent <- c(range(pts[,1]), range(pts[,2]))
   }
   file <- vrtpoints(pts)
+  print(file)
   ## build this into vapour/inst/include/gdalapplib/gdalapplib.h
-  sf::gdal_utils("grid", file, tf <- tempfile(fileext = ".tif"), options =c("-a", algorithm))
-  matrix(vapour::vapour_read_raster_dbl(tf, native = TRUE), dimension[2L], byrow = TRUE)
+  sf::gdal_utils("grid", file, tf <- tempfile(fileext = ".tif"),
+                 options =c("-a", algorithm,
+                            "-outsize", dimension[1], dimension[2],
+                            "-txe", extent[1], extent[2],
+                            "-tye", extent[3], extent[4]))
+
+  if (read) {
+    out <- matrix(vapour::vapour_warp_raster_dbl(tf, dimension = dimension, extent = extent), dimension[2L], byrow = TRUE)
+  } else {
+    out <- tf
+  }
+  unlink(tf)
+  out
 }
 
 
