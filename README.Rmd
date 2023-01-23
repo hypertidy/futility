@@ -13,20 +13,22 @@ knitr::opts_chunk$set(
 )
 ```
 
-# gdalgrid
+# futility
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of gdalgrid is just a friendly wrapper around GDAL's [gdal_grid](https://gdal.org/programs/gdal_grid.html)
+The goal of futility is just a friendly wrapper around GDAL's utility libraries.  
+
+Examples include [gdal_grid](https://gdal.org/programs/gdal_grid.html)
 
 ## Installation
 
-You can install the development version of gdalgrid from [GitHub](https://github.com/) with:
+You can install the development version of futility from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("mdsumner/gdalgrid")
+devtools::install_github("hypertidy/futility")
 ```
 
 ## Example
@@ -34,7 +36,7 @@ devtools::install_github("mdsumner/gdalgrid")
 This is a basic example, compare to the triangulation interpolation in the geometry package. 
 
 ```{r example}
-library(gdalgrid)
+library(futility)
 library(guerrilla)
 xyz <- quakes[c("long", "lat", "depth")]
 x1 <- tri_fun(xyz[,1:2], xyz[,3, drop = TRUE], 
@@ -46,10 +48,10 @@ ximage::ximage(x0, asp = 1)
 ```
 
 
-I just wrote this as a way to check the timings, of the disussion in this issue ['Extreme performance regression in gdal_grid with method linear'](https://github.com/OSGeo/gdal/issues/1879). Looks like there's a problem with results outside the convex hull .... 
+I originally t wrote this as a way to check the timings, of the disussion in this issue ['Extreme performance regression in gdal_grid with method linear'](https://github.com/OSGeo/gdal/issues/1879). Looks like there's a problem with results outside the convex hull .... 
 
 
 
 ## Code of Conduct
   
-Please note that the gdalgrid project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that the futility project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

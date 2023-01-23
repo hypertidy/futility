@@ -1,15 +1,15 @@
-Package: gdalgrid
-Title: Run `gdal_grid`
-Version: 0.0.0.9000
+Package: futility
+Title: Helpers for the 'GDAL' Application Utility Libraries
+Version: 0.0.0.9001
 Authors@R: 
     person("Michael D.", "Sumner", , "mdsumner@gmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: Helpful wrappers around the GDAL utilities, for now via the 'sf' package.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Language: es
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Imports: 
     sf
-URL: https://github.com/mdsumner/gdalgrid
-BugReports: https://github.com/mdsumner/gdalgrid/issues
+URL: https://github.com/hypertidy/futility
+BugReports: https://github.com/hypertidy/futility/issues
